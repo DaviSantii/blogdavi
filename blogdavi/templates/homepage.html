@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+  <h1 style="color: cornflowerblue">Blog Davi - Comunidade</h1>
+  <h3>Onde todos podem falar qualquer merda</h3>
+  <hr>
+  <h3>Posts</h3>
+  {% for post in posts %}
+  <div class="row border mt-4 p-3 meupost g-3">
+    <div class="col-12 col-md-2">
+      <div class="image">
+        <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded me-2" width="200">
+      </div>
+      <strong> {{ post.autor.username }}</strong>
+      <div class="row justify-content-center">
+      {% for curso in post.autor.cursos.split(';') %}
+        <button type="button" class="btn btn-primary mt-2" disabled>{{ curso }}</button>
+      {% endfor %}
+      </div>
+    </div>
+    <div class="col-12 col-md-10">
+        <h4>
+          <a href=" {{ url_for('exibir_post', post_id=post.id) }}" style="text-decoration: none">
+          {{ post.titulo }} 
+          </a>
+          <small class="text-muted" style="font-size: 15px">
+             - Data de Criação: {{ post.data_criacao.strftime('%d/%m/%Y') }}
+          </small>
+        </h4> 
+      <p> {{ post.corpo }} </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
